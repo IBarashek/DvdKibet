@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="93c0405d10084774a4ded50102a98505" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_DiscsModel.Age_Restricted" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiscsModel.Client" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiscsModel.Employee" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiscsModel.Film" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiscsModel.Film_Rental" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiscsModel.Genre" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiscsModel.Receipt" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiscsModel.Role" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiscsModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="DB_DiscsModel.FK_Film_Age_Restricted" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiscsModel.FK_Film_Rental_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiscsModel.FK_Employee_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiscsModel.FK_Film_Rental_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiscsModel.FK_Film_Genre" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiscsModel.FK_Receipt_Film" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiscsModel.FK_Receipt_Film_Rental" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

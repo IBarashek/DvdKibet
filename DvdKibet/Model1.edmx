@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DB_DiscsModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Age_Restricted">
+          <Key>
+            <PropertyRef Name="Id_Age_Restricted" />
+          </Key>
+          <Property Name="Id_Age_Restricted" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Age_Restricted" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id_Client" />
+          </Key>
+          <Property Name="Id_Client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id_Employee" />
+          </Key>
+          <Property Name="Id_Employee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_Role" Type="int" Nullable="false" />
+          <Property Name="Salary" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="Id_Film" />
+          </Key>
+          <Property Name="Id_Film" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_Film" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Id_Genre" Type="int" Nullable="false" />
+          <Property Name="Id_Age_Restricted" Type="int" Nullable="false" />
+          <Property Name="Film_Rental_Cost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Film_Rental">
+          <Key>
+            <PropertyRef Name="Id_Film_Rental" />
+          </Key>
+          <Property Name="Id_Film_Rental" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date_Receipt" Type="date" Nullable="false" />
+          <Property Name="Lease_up" Type="date" Nullable="false" />
+          <Property Name="Id_Client" Type="int" Nullable="false" />
+          <Property Name="Id_Employee" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Id_Genre" />
+          </Key>
+          <Property Name="Id_Genre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_Of_Genre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id_Receipt" />
+          </Key>
+          <Property Name="Id_Receipt" Type="int" Nullable="false" />
+          <Property Name="Id_Film_Rental" Type="int" Nullable="false" />
+          <Property Name="Id_Film" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id_Role" />
+          </Key>
+          <Property Name="Id_Role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_Of_Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id_Role" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Id_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Age_Restricted">
+          <End Role="Age_Restricted" Type="Self.Age_Restricted" Multiplicity="1" />
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Age_Restricted">
+              <PropertyRef Name="Id_Age_Restricted" />
+            </Principal>
+            <Dependent Role="Film">
+              <PropertyRef Name="Id_Age_Restricted" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id_Genre" />
+            </Principal>
+            <Dependent Role="Film">
+              <PropertyRef Name="Id_Genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Rental_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Film_Rental" Type="Self.Film_Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id_Client" />
+            </Principal>
+            <Dependent Role="Film_Rental">
+              <PropertyRef Name="Id_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Rental_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Film_Rental" Type="Self.Film_Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id_Employee" />
+            </Principal>
+            <Dependent Role="Film_Rental">
+              <PropertyRef Name="Id_Employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_Film">
+          <End Role="Film" Type="Self.Film" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film">
+              <PropertyRef Name="Id_Film" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="Id_Film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_Film_Rental">
+          <End Role="Film_Rental" Type="Self.Film_Rental" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film_Rental">
+              <PropertyRef Name="Id_Film_Rental" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="Id_Film_Rental" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DB_DiscsModelContainer">
+          <EntitySet Name="Age_Restricted" EntityType="Self.Age_Restricted" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Film_Rental" EntityType="Self.Film_Rental" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Age_Restricted" Association="Self.FK_Film_Age_Restricted">
+            <End Role="Age_Restricted" EntitySet="Age_Restricted" />
+            <End Role="Film" EntitySet="Film" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Genre" Association="Self.FK_Film_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Film" EntitySet="Film" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Rental_Client" Association="Self.FK_Film_Rental_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Film_Rental" EntitySet="Film_Rental" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Rental_Employee" Association="Self.FK_Film_Rental_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Film_Rental" EntitySet="Film_Rental" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Film" Association="Self.FK_Receipt_Film">
+            <End Role="Film" EntitySet="Film" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Film_Rental" Association="Self.FK_Receipt_Film_Rental">
+            <End Role="Film_Rental" EntitySet="Film_Rental" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_DiscsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Age_Restricted">
+          <Key>
+            <PropertyRef Name="Id_Age_Restricted" />
+          </Key>
+          <Property Name="Id_Age_Restricted" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Age_Restricted1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Film" Relationship="Self.FK_Film_Age_Restricted" FromRole="Age_Restricted" ToRole="Film" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id_Client" />
+          </Key>
+          <Property Name="Id_Client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Film_Rental" Relationship="Self.FK_Film_Rental_Client" FromRole="Client" ToRole="Film_Rental" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id_Employee" />
+          </Key>
+          <Property Name="Id_Employee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id_Role" Type="Int32" Nullable="false" />
+          <Property Name="Salary" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
+          <NavigationProperty Name="Film_Rental" Relationship="Self.FK_Film_Rental_Employee" FromRole="Employee" ToRole="Film_Rental" />
+        </EntityType>
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="Id_Film" />
+          </Key>
+          <Property Name="Id_Film" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_Film" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id_Genre" Type="Int32" Nullable="false" />
+          <Property Name="Id_Age_Restricted" Type="Int32" Nullable="false" />
+          <Property Name="Film_Rental_Cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Age_Restricted" Relationship="Self.FK_Film_Age_Restricted" FromRole="Film" ToRole="Age_Restricted" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_Film_Genre" FromRole="Film" ToRole="Genre" />
+          <NavigationProperty Name="Receipt" Relationship="Self.FK_Receipt_Film" FromRole="Film" ToRole="Receipt" />
+        </EntityType>
+        <EntityType Name="Film_Rental">
+          <Key>
+            <PropertyRef Name="Id_Film_Rental" />
+          </Key>
+          <Property Name="Id_Film_Rental" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date_Receipt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Lease_up" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Id_Client" Type="Int32" Nullable="false" />
+          <Property Name="Id_Employee" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Film_Rental_Client" FromRole="Film_Rental" ToRole="Client" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Film_Rental_Employee" FromRole="Film_Rental" ToRole="Employee" />
+          <NavigationProperty Name="Receipt" Relationship="Self.FK_Receipt_Film_Rental" FromRole="Film_Rental" ToRole="Receipt" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Id_Genre" />
+          </Key>
+          <Property Name="Id_Genre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_Of_Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Film" Relationship="Self.FK_Film_Genre" FromRole="Genre" ToRole="Film" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id_Receipt" />
+          </Key>
+          <Property Name="Id_Receipt" Type="Int32" Nullable="false" />
+          <Property Name="Id_Film_Rental" Type="Int32" Nullable="false" />
+          <Property Name="Id_Film" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Film" Relationship="Self.FK_Receipt_Film" FromRole="Receipt" ToRole="Film" />
+          <NavigationProperty Name="Film_Rental" Relationship="Self.FK_Receipt_Film_Rental" FromRole="Receipt" ToRole="Film_Rental" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id_Role" />
+          </Key>
+          <Property Name="Id_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_Of_Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Role" FromRole="Role" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Film_Age_Restricted">
+          <End Role="Age_Restricted" Type="Self.Age_Restricted" Multiplicity="1" />
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Age_Restricted">
+              <PropertyRef Name="Id_Age_Restricted" />
+            </Principal>
+            <Dependent Role="Film">
+              <PropertyRef Name="Id_Age_Restricted" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Rental_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Film_Rental" Type="Self.Film_Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id_Client" />
+            </Principal>
+            <Dependent Role="Film_Rental">
+              <PropertyRef Name="Id_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id_Role" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Id_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Rental_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Film_Rental" Type="Self.Film_Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id_Employee" />
+            </Principal>
+            <Dependent Role="Film_Rental">
+              <PropertyRef Name="Id_Employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id_Genre" />
+            </Principal>
+            <Dependent Role="Film">
+              <PropertyRef Name="Id_Genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_Film">
+          <End Role="Film" Type="Self.Film" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film">
+              <PropertyRef Name="Id_Film" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="Id_Film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_Film_Rental">
+          <End Role="Film_Rental" Type="Self.Film_Rental" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film_Rental">
+              <PropertyRef Name="Id_Film_Rental" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="Id_Film_Rental" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DiscsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Age_Restricted" EntityType="Self.Age_Restricted" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Film" EntityType="Self.Film" />
+          <EntitySet Name="Film_Rental" EntityType="Self.Film_Rental" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" />
+          <EntitySet Name="Receipt" EntityType="Self.Receipt" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Film_Age_Restricted" Association="Self.FK_Film_Age_Restricted">
+            <End Role="Age_Restricted" EntitySet="Age_Restricted" />
+            <End Role="Film" EntitySet="Film" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Rental_Client" Association="Self.FK_Film_Rental_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Film_Rental" EntitySet="Film_Rental" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Rental_Employee" Association="Self.FK_Film_Rental_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Film_Rental" EntitySet="Film_Rental" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Genre" Association="Self.FK_Film_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Film" EntitySet="Film" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Film" Association="Self.FK_Receipt_Film">
+            <End Role="Film" EntitySet="Film" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Film_Rental" Association="Self.FK_Receipt_Film_Rental">
+            <End Role="Film_Rental" EntitySet="Film_Rental" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DB_DiscsModelContainer" CdmEntityContainer="DiscsEntities">
+          <EntitySetMapping Name="Age_Restricted">
+            <EntityTypeMapping TypeName="DB_DiscsModel.Age_Restricted">
+              <MappingFragment StoreEntitySet="Age_Restricted">
+                <ScalarProperty Name="Id_Age_Restricted" ColumnName="Id_Age_Restricted" />
+                <ScalarProperty Name="Age_Restricted1" ColumnName="Age_Restricted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="DB_DiscsModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Id_Client" ColumnName="Id_Client" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="DB_DiscsModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id_Employee" ColumnName="Id_Employee" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Film">
+            <EntityTypeMapping TypeName="DB_DiscsModel.Film">
+              <MappingFragment StoreEntitySet="Film">
+                <ScalarProperty Name="Id_Film" ColumnName="Id_Film" />
+                <ScalarProperty Name="Name_Film" ColumnName="Name_Film" />
+                <ScalarProperty Name="Id_Genre" ColumnName="Id_Genre" />
+                <ScalarProperty Name="Id_Age_Restricted" ColumnName="Id_Age_Restricted" />
+                <ScalarProperty Name="Film_Rental_Cost" ColumnName="Film_Rental_Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Film_Rental">
+            <EntityTypeMapping TypeName="DB_DiscsModel.Film_Rental">
+              <MappingFragment StoreEntitySet="Film_Rental">
+                <ScalarProperty Name="Id_Film_Rental" ColumnName="Id_Film_Rental" />
+                <ScalarProperty Name="Date_Receipt" ColumnName="Date_Receipt" />
+                <ScalarProperty Name="Lease_up" ColumnName="Lease_up" />
+                <ScalarProperty Name="Id_Client" ColumnName="Id_Client" />
+                <ScalarProperty Name="Id_Employee" ColumnName="Id_Employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genre">
+            <EntityTypeMapping TypeName="DB_DiscsModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="Id_Genre" ColumnName="Id_Genre" />
+                <ScalarProperty Name="Name_Of_Genre" ColumnName="Name_Of_Genre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receipt">
+            <EntityTypeMapping TypeName="DB_DiscsModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipt">
+                <ScalarProperty Name="Id_Receipt" ColumnName="Id_Receipt" />
+                <ScalarProperty Name="Id_Film_Rental" ColumnName="Id_Film_Rental" />
+                <ScalarProperty Name="Id_Film" ColumnName="Id_Film" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="DB_DiscsModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+                <ScalarProperty Name="Name_Of_Role" ColumnName="Name_Of_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DB_DiscsModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
