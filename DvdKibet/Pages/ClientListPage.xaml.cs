@@ -12,19 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DvdKibet.Pages;
 
-namespace DvdKibet
+namespace DvdKibet.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для ClientListPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ClientListPage : Page
     {
-        public MainWindow()
+        public ClientListPage()
         {
             InitializeComponent();
-            MainFrame.NavigationService.Navigate(new AuthorizationPage());
         }
     }
 }
